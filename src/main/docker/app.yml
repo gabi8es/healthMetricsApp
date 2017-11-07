@@ -1,0 +1,19 @@
+version: '2'
+services:
+    healthmetrics-app:
+        image: healthmetrics
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://healthmetrics-postgresql:5432/healthMetrics
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=healthmetrics-elasticsearch:9300
+        ports:
+            - 8080:8080
+    healthmetrics-postgresql:
+        extends:
+            file: postgresql.yml
+            service: healthmetrics-postgresql
+    healthmetrics-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: healthmetrics-elasticsearch
